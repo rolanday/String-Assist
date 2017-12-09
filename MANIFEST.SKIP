@@ -1,0 +1,14 @@
+# Makemaker generated files and dirs.
+^MANIFEST\.
+^Makefile$
+^blib/
+^MakeMaker-\d
+.DS_Store$
+.git
+.gitignore
+.test
+.travis.yml
+Makefile
+client
+server
+MANIFEST.bak
