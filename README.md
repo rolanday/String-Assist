@@ -68,7 +68,7 @@ There are two recommended approaches to installing this module.
 To install via cpanm's git function:
 
 ```
-cpanm https://github.com/rolanday/File-EasyFind.git
+cpanm https://github.com/rolanday/String-Assist.git
 ```
 **Note:** This method requires that you have [cpanm](https://www.cpan.org/modules/INSTALL.html) and make installed on your system.
 
