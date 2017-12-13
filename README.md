@@ -2,13 +2,16 @@
 Collection of handy string helper methods.
 
 ## Functions
-#### hasprint($str)
+#### has_print($str)
 Returns 1 if $str contains printable characters, else returns 0.
 
-#### iswhitespace($str)
+#### is_integer($str)
+Returns 1 if $str represents integer numeric value, else returns 0.
+
+#### is_whitespace($str)
 Returns 1 if $str contains all whitespace (i.e., no printable characters), else returns 0.
 
-#### safetrim($str, $mode)
+#### safe_trim($str, $mode)
 Identical to *trim*, except that caller can safely pass undefined value (undef). If undef is passed, empty string ('') is returned.
 
 See *trim* for additional details.
@@ -40,21 +43,21 @@ my $result = squeeze(' a b c def g    ');
 say $result; #prints 'abcdefg'
 ```
 
-#### replacechar($str, $char, $replace_char)
+#### replace_char($str, $char, $replace_char)
 Replaces all occurrences of *$char* in *$str* with *$replace_char value*.
 
 ```perl
-my $result = replacechar('abcdefg', 'd', 'x');
+my $result = replace_char('abcdefg', 'd', 'x');
 say $result; # prints 'abcxefg'
 ```
 **Note:** $replace_char must be single character or '', else the method will fail.
 
-#### replacechars($str, \@chars, $replace_char)
-Identical to *replacechar*, except caller can pass an array of characters to be replaced by $replace_char. *@chars* must be passed by reference.
+#### replace_chars($str, \@chars, $replace_char)
+Identical to *replace_char*, except caller can pass an array of characters to be replaced by $replace_char. *@chars* must be passed by reference.
 
 ```perl
 my @chars = qw(b d f);
-my $result = replacechars('abcdefg', \@chars, 'x');
+my $result = replace_chars('abcdefg', \@chars, 'x');
 say $result; # $prints 'axcxexg'
 ```
 **Note:** Each value in @chars must be single character, else the method will fail.

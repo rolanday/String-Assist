@@ -1,29 +1,29 @@
 #!/usr/bin/perl -w
 use strict;
 use warnings;
-use String::Assist qw(hasprint iswhitespace);
+use String::Assist qw(has_print is_whitespace);
 use Test::Simple tests => 18;
 
 # Following calls should return 1
-ok(hasprint('   a    '));
-ok(hasprint("a"));
+ok(has_print('   a    '));
+ok(has_print("a"));
 
 # Following calls should return 0
-ok(!hasprint(''));
-ok(!hasprint(' '));
-ok(!hasprint('           '));
-ok(!hasprint("     \n      "));
-ok(!hasprint("\a"));
-ok(!hasprint("\b"));
-ok(!hasprint("\e"));
-ok(!hasprint("\t"));
-ok(!hasprint("\n"));
-ok(!hasprint("\r\n"));
-ok(!hasprint());
-ok(!hasprint(undef));
+ok(!has_print(''));
+ok(!has_print(' '));
+ok(!has_print('           '));
+ok(!has_print("     \n      "));
+ok(!has_print("\a"));
+ok(!has_print("\b"));
+ok(!has_print("\e"));
+ok(!has_print("\t"));
+ok(!has_print("\n"));
+ok(!has_print("\r\n"));
+ok(!has_print());
+ok(!has_print(undef));
 
-# Sanity check the inverse iswhitespace method
-ok(iswhitespace());
-ok(iswhitespace(''));
-ok(iswhitespace("   \n"));
-ok(!iswhitespace("a"));
+# Sanity check the inverse is_whitespace method
+ok(is_whitespace());
+ok(is_whitespace(''));
+ok(is_whitespace("   \n"));
+ok(!is_whitespace("a"));

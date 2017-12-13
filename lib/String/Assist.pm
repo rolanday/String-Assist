@@ -15,26 +15,36 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = ();
 our @EXPORT_OK = qw(
-  hasprint
-  iswhitespace
-  replacechar
-  replacechars
-  safetrim
+  has_print
+  is_integer
+  is_whitespace
+  replace_char
+  replace_chars
+  safe_trim
   squeeze
   trim
   );
 our %EXPORT_TAGS = (all => [@EXPORT_OK]);
 
-sub hasprint {
+sub has_print {
   my $str = shift;
   return defined $str ? $str =~ /[!-~]/g : 0;
 }
 
-sub iswhitespace {
-  return !hasprint(shift);
+sub is_integer {
+  my $str = shift;
+  if (is_whitespace($str)) {
+    croak 'invalid arg[$str]';
+  }
+
+  return ($str eq '0' || $str =~ m/^[1-9]\d*$/g);
 }
 
-sub safetrim {
+sub is_whitespace {
+  return !has_print(shift);
+}
+
+sub safe_trim {
   my $str = shift;
   if (! defined $str) {
     $str = '';
@@ -45,7 +55,7 @@ sub safetrim {
 sub trim {
   my ($str, $mode) = @_;
   if (! defined $str) {
-    croak "Invalid argument";
+    croak 'invalid arg[$str]';
   }
 
   if (defined $mode) {
@@ -62,7 +72,7 @@ sub trim {
   } elsif ($mode eq 'both') {
     $str =~ s/^\s+|\s+$//g
   } else {
-      croak "Invalid arg[1]: Illegal mode";
+      croak 'invalid arg<$mode>';
   }
 
   return $str;
@@ -70,29 +80,29 @@ sub trim {
 
 sub squeeze {
   my $str = shift;
-  return replacechar($str, ' ', '');
+  return replace_char($str, ' ', '');
 }
 
-sub replacechar {
+sub replace_char {
   my ($str, $old, $replacement) = @_;
   my @chars = ($old);
-  return replacechars($str, \@chars, $replacement);
+  return replace_chars($str, \@chars, $replacement);
 }
 
-sub replacechars {
+sub replace_chars {
 
   my ($str, $chars_ref, $replacement) = @_;
   if (! defined $str) {
-    croak 'Invalid arg[0]';
+    croak 'invalid arg[$str]';
   }
 
   if (! defined $chars_ref || ref($chars_ref) ne 'ARRAY') {
-    croak 'Invalid arg[1]: Must be array passed by ref.';
+    croak 'invalid arg[$chars_ref]';
   }
   my @chars = @ {$chars_ref};
 
   if (! defined $replacement || length $replacement > 1) {
-    croak 'Invalid arg[2]';
+    croak 'invalid arg[$replacement]';
   }
 
   my $pattern = "";
@@ -123,16 +133,16 @@ String::Assist - String helper methods.
 
 =over 3
 
-=item B<hasprint($str)>
+=item B<has_print($str)>
 
 Returns 1 if $str contains printable characters, else returns 0.
 
-=item B<iswhitespace($str)>
+=item B<is_whitespace($str)>
 
 Returns 1 if $str contains all whitespace (i.e., no printable characters),
 else returns 0.
 
-=item B<safetrim($str, $mode)>
+=item B<safe_trim($str, $mode)>
 
 Identical to C<trim>, except that caller can safely pass undefined value
 C<undef>. If C<undef> is passed, empty string ('') is returned.
@@ -168,16 +178,16 @@ undefined.
 Squeezes out the space from string. Similar to C<trim($str, 'both')> except
 also removes any space inside the string.
 
-=item B<replacechar($str,  $char, $replace_char)>
+=item B<replace_char($str,  $char, $replace_char)>
 
 Replaces all occurrences of *$char* in *$str* with *$replace_char value*.
 
 B<Note:> $replace_char must be single character or '', else the method will
 fail.
 
-=item B<replacechars($str, \@chars, $replace_char)>
+=item B<replace_chars($str, \@chars, $replace_char)>
 
-Identical to C<replacechar>, except caller can pass an array of characters to
+Identical to C<replace_char>, except caller can pass an array of characters to
 be replaced by C<$replace_char>. C<@chars> must be passed by reference.
 
 B<Note:> Each value in @chars must be single character, else the method will
