@@ -14,7 +14,9 @@ use Carp;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = ();
-our @EXPORT_OK = qw(
+our %EXPORT_TAGS = (
+  # all public non-object-oriented functions:
+  Public => [qw(
   has_print
   is_integer
   is_whitespace
@@ -23,8 +25,9 @@ our @EXPORT_OK = qw(
   safe_trim
   squeeze
   trim
-  );
-our %EXPORT_TAGS = (all => [@EXPORT_OK]);
+  )],
+);
+Exporter::export_ok_tags(keys %EXPORT_TAGS);
 
 sub has_print {
   my $str = shift;
@@ -128,6 +131,16 @@ __END__
 =head1 NAME
 
 String::Assist - String helper methods.
+
+=head1 SYNOPSIS
+
+ use String::Assist ':Public';
+ 
+ print trim('   foobar   ')."\n";
+
+ __END__
+ Prints 'foobar' to console.
+
 
 =head1 Methods
 
